@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RRD Form</title>
+
+  <!--GOOGLE fonts links-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Afacad&family=Marcellus&family=Montserrat&family=Quicksand&family=Slabo+27px&display=swap" rel="stylesheet">   
+    
+  <!--tailwind and flowbite links of cdn-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.css" rel="stylesheet"/>
+<style>
+
+body {
+    background: url(https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg?cs=srgb&dl=pexels-sohail-nachiti-807598.jpg&fm=jpg&_gl=1*1ch8zf2*_ga*NDU5NDQyMTc1LjE3MDU4MzA3OTY.*_ga_8JE65Q40S6*MTcwNTgzMDgwNC4xLjEuMTcwNTgzMDgzMC4wLjAuMA..);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .container {
+    background: rgb(227 227 227 / 7%);
+    border-radius: 20px;
+    padding: 20px;
+    width: 90%;
+    max-width: 510px;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 79%), 0 6px 20px 0 rgb(0 0 0 / 53%);
+    color: whitesmoke;
+    backdrop-filter: blur(10px);
+    position: absolute;
+    max-height: 549px; /* Set a maximum height for the card body*/
+    overflow-y: auto; /* Enable vertical scrollbar if content exceeds the max height*/
+  }
+
+  @media (max-width: 767px) {
+    .container {
+      width: 93%;
+      max-width: none;
+    }
+  }
+
+  /* Default styling for larger screens */
+  @media (min-width: 768px) {
+        #popup-modal {
+            top: 1/2;
+            left: 1/2;
+            transform: -translate-x-1/2 -translate-y-1/2;
+            width: 100%;
+            max-width: 400px; /* Adjust the max-width as needed */
+        }
+    }
+
+    /* Responsive styling for smaller screens */
+    @media (max-width: 767px) {
+        #popup-modal {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: calc(100% - 2rem); /* Adjust padding or margins as needed */
+            max-width: none;
+        }
+    }
+
+    .dotlottie-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .loading-center{
+    text-align: center;
+  }
+
+  .loading-center svg{
+    display: block;
+    margin: 0 auto;
+  }
+
+  .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: none;
+      z-index: 49;
+      backdrop-filter: blur(3px);
+    }
+
+</style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+
+<div class="container mx-auto p-8">
+    <form method="post" name="google-sheet">
+        <div class="mb-5">
+            <label for="Full Name" class="block mb-2 text-sm font-medium text-white-900 dark:text-white">Full Name</label>
+            <input type="text" id="fullName" name="FullName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="FirstName SurName" required>
+        </div>
+        <div class="grid gap-6 mb-6 md:grid-cols-2">
+            <div>
+                <label for="countries" class="block mb-2 text-sm font-medium text-white-900 dark:text-white">Select an option</label>
+                <select id="branch" name="Branch"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123-45-678" required>
+                    <option disabled selected>Your Branch</option>
+                    <option value="COMP-A">COMP-A</option>
+                    <option value="COMP-B">COMP-B</option>
+                    <option value="COMP-C">COMP-C</option>
+                    <option value="IT-A">IT-A</option>
+                    <option value="IT-B">IT-B</option>
+                    <option value="IT-C">IT-C</option>
+                    <option value="AI & DS-A">AI & DS-A</option>
+                    <option value="AI & DS-B">AI & DS-B</option>
+                </select>
+            </div>
+            
+            <div class="">
+                <label for="coatSize" class="block mb-2 text-sm font-medium text-white-900 dark:text-white">Lab Coat Size</label>
+                <input type="coatSize" id="coatSize" name="CoatSize" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="_ _ _" pattern="[0-9]{2,3}" required>
+            </div>
+        </div>
+        
+        <div class="mb-5">
+            <label for="mobileNumber" class="block mb-2 text-sm font-medium text-white-900 dark:text-white">Phone number</label>
+            <input type="mobileNumber" id="mobileNumber" name="Mobile Number" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="123-45-678" pattern="[0-9]{10}" required>
+        </div>
+        
+        <div class="mb-5">
+            <label for="email" class="block mb-2 text-sm font-medium text-white-900 dark:text-white">Email address</label>
+            <input type="email" id="email" name="Email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="email@xyz.com" required>
+        </div>
+        
+        <div class="flex items-start mb-5">
+            <div class="flex items-center h-5">
+                <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800" required>
+            </div>
+            <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a>.</label>
+        </div>
+        <button type="submit" value="Submit" name="submit" onclick="validateForm()" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+    </form>
+</div>
+
+<div id="popup-modal" tabindex="-1" class="hidden overflow-x-hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[100%] max-w-md">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700" style="border-radius: 30px;">
+                <div class="p-4 md:p-5 text-center">
+                    <!--<svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">-->
+                        <div class="dotlottie-container">
+                        <dotlottie-player src="https://lottie.host/b262bbf7-05a6-4a30-b6e3-648b52389ffe/o5joDCtkZz.json" background="transparent" speed="1" style="width: 80px; height: 80px;" loop autoplay></dotlottie-player>
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                        </div>
+                        <!--</svg>-->
+                    <h3 class="mb-5" style="color: rgb(45, 45, 45);">Thanks For Participating In RRD, Your Data Has Been Received To Us !</h3>
+                    <button data-modal-hide="popup-modal" type="button" class="text-white bg-green-600 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center me-2">
+                        OK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div id="loading-popup" tabindex="-1"  class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50 w-[100%] max-w-md">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700" style="border-radius: 30px;">
+            <div class="p-4 md:p-5 text-center">
+                <div class="loading-center">
+                <div role="status">
+                        <svg aria-hidden="true" class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                    </svg>
+                    <h4 style="margin-top: 15px;">Please Wait...</h4>
+                    <span class="sr-only">Loading...</span>
+                    
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div> 
+
+
+<!--flowbite JS cdn link-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.1/flowbite.min.js"></script>
+<script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs" type="module"></script> 
+
+
+<script>
+/*
+//script for data sharing on excel sheet
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxHHlECeDTOpY9hoUiYxj9yNegBnFrdy6tBFEWrXO_WDpcXl5X_jTUTDS20TNOhNoC1/exec';
+    const form = document.forms['google-sheet'];
+
+    // Function to show the custom modal
+    function showCustomModal() {
+        const modal = document.getElementById('popup-modal');
+        modal.classList.remove('hidden');
+    }
+
+    // Event listener for form submission
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            .then(response => showCustomModal()) // Call the custom modal function
+            .catch(error => console.error('Error!', error.message));
+    });
+
+    // Function to hide the custom modal
+    function hideCustomModal() {
+        const modal = document.getElementById('popup-modal');
+        modal.classList.add('hidden');
+    }
+
+    // Add click event listeners to close the modal when clicking outside or on the close button
+    document.addEventListener('click', event => {
+        if (event.target.dataset.modalHide === 'popup-modal') {
+            hideCustomModal();
+        }
+    });
+
+    // Optionally, you can also add a listener for the Escape key to close the modal
+    document.addEventListener('keydown', event => {
+        if (event.key === 'Escape') {
+            hideCustomModal();
+        }
+    });
+
+
+// check for branch is selected or not
+ function validateForm() {
+            var selectedCountry = document.getElementById("branch").value;
+            if (selectedCountry === "Your Branch") {
+                alert("Please Select Your Branch");
+            } else {
+                // Proceed with form submission or other actions
+                document.getElementById("myForm").submit();
+            }
+        }*/
+
+/*      
+//new script for overlay
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxHHlECeDTOpY9hoUiYxj9yNegBnFrdy6tBFEWrXO_WDpcXl5X_jTUTDS20TNOhNoC1/exec';
+    const form = document.forms['google-sheet'];
+
+    function showOverlay() {
+      const overlay = document.getElementById('overlay');
+      overlay.style.display = 'block';
+    }
+
+    function hideOverlay() {
+      const overlay = document.getElementById('overlay');
+      overlay.style.display = 'none';
+    }
+
+    function showCustomModal() {
+      showOverlay();
+      const modal = document.getElementById('popup-modal');
+      modal.classList.remove('hidden');
+    }
+
+    function hideCustomModal() {
+      hideOverlay();
+      const modal = document.getElementById('popup-modal');
+      modal.classList.add('hidden');
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => showCustomModal())
+        .catch(error => console.error('Error!', error.message));
+    });
+
+    document.addEventListener('click', event => {
+      if (event.target.dataset.modalHide === 'popup-modal') {
+        hideCustomModal();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        hideCustomModal();
+      }
+    });
+
+    function validateForm() {
+      var selectedCountry = document.getElementById("branch").value;
+      if (selectedCountry === "Your Branch") {
+        alert("Please Select Your Branch");
+      } else {
+        form.submit();
+      }
+    }*/
+
+// Script that will show loading popup
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbxHHlECeDTOpY9hoUiYxj9yNegBnFrdy6tBFEWrXO_WDpcXl5X_jTUTDS20TNOhNoC1/exec';
+    const form = document.forms['google-sheet'];
+
+    function showOverlay() {
+      const overlay = document.getElementById('overlay');
+      overlay.style.display = 'block';
+    }
+
+    function hideOverlay() {
+      const overlay = document.getElementById('overlay');
+      overlay.style.display = 'none';
+    }
+
+    function showLoadingPopup() {
+  showOverlay();
+  const loadingPopup = document.getElementById('loading-popup');
+  loadingPopup.classList.remove('hidden');
+  loadingPopup.classList.add('visible');
+}
+
+function hideLoadingPopup() {
+  hideOverlay();
+  const loadingPopup = document.getElementById('loading-popup');
+  loadingPopup.classList.remove('visible',);
+  loadingPopup.classList.add('hidden');
+}
+
+function showCustomModal() {
+  hideLoadingPopup();
+  showOverlay();
+  const modal = document.getElementById('popup-modal');
+  modal.classList.remove('hidden');
+  modal.classList.add('visible');
+}
+
+function hideCustomModal() {
+  hideOverlay();
+  const modal = document.getElementById('popup-modal');
+  modal.classList.remove('visible');
+  modal.classList.add('hidden');
+}
+
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      showLoadingPopup();
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Success:', data);
+          showCustomModal();
+        })
+        .catch(error => {
+          console.error('Error!', error.message);
+          hideCustomModal();
+        });
+    });
+
+    document.addEventListener('click', event => {
+      if (event.target.dataset.modalHide === 'popup-modal') {
+        hideCustomModal();
+      }
+    });
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') {
+        hideCustomModal();
+      }
+    });
+
+    function validateForm() {
+      var selectedCountry = document.getElementById("branch").value;
+      if (selectedCountry === "Your Branch") {
+        alert("Please Select Your Branch");
+      } else {
+        form.submit();
+      }
+    }
+
+</script>
+</body>
+</html>
